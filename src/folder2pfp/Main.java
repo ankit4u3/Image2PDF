@@ -87,8 +87,6 @@ public class Main extends javax.swing.JFrame {
         console = new javax.swing.JTextArea();
         jButton2 = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,20 +117,6 @@ public class Main extends javax.swing.JFrame {
 
         jTextField2.setText("**************************************************************");
 
-        jButton3.setText("A4");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("A3");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,12 +136,7 @@ public class Main extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4)))
+                            .addComponent(jButton2))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -180,11 +159,8 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 18, Short.MAX_VALUE)
+                .addComponent(jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -214,110 +190,6 @@ public class Main extends javax.swing.JFrame {
         export2PDF(o);
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-
-        final String FEntry;
-        FEntry = JOptionPane.showInputDialog("Enter File Name ");
-        new SwingWorker<Void, Void>() {
-            String shift_id = FEntry;
-
-            String examdatename = "EXPORT_" + "_" + FEntry;
-
-            @Override
-            protected void done() {
-//                try {
-//                    PrintPdf p = new PrintPdf(examdatename + ".pdf");
-//
-//                } catch (IOException ex) {
-//                } catch (PrinterException ex) {
-//                }
-
-            }
-
-            @Override
-            protected Void doInBackground() {
-
-                String shiftcode = FEntry;
-                ResultSet rs = null;
-                PreparedStatement prepstmt = null;
-
-                ConsoleMsg("Generating Document");
-                Document document = new Document(PageSize.A4, 10, 10, 10, 10);
-
-                try {
-                    PdfWriter writer = PdfWriter.getInstance(document,
-                            new FileOutputStream(FEntry + ".pdf"));
-
-                    // step 2
-                    document.open();
-
-                    //   Paragraph heading = new Paragraph("﻿Race Report Shift Code " + shift_selector.getSelectedItem().toString(), new Font(Font.FontFamily.HELVETICA, 18f, Font.BOLD));
-                    //   heading.setAlignment(1);
-                    //  heading.setSpacingAfter(5f);
-                    Paragraph headingRun = new Paragraph(FEntry + " Image Export  " + "\n\n", new Font(Font.FontFamily.HELVETICA, 11f, Font.BOLD));
-                    headingRun.setAlignment(1);
-                    //  headingRun.setSpacingAfter(5f);
-
-                    Paragraph heading2 = new Paragraph("﻿****************************", new Font(Font.FontFamily.HELVETICA, 18f, Font.BOLD));
-                    heading2.setAlignment(1);
-
-                    //   com.itextpdf.text.Image csbcHeader = com.itextpdf.text.Image.getInstance(ImageIO.read(ClassLoader.getSystemResource("images/csbcHeader.jpg")), null);
-                    //   csbcHeader.scaleToFit(50f, 100f);
-                    Font font = FontFactory.getFont("Times-Roman");
-
-                    Font fontbold = FontFactory.getFont("Times-Roman", 8, Font.NORMAL);
-
-                    PdfPTable csbcHeaderPartOne = new PdfPTable(1);
-                    //  csbcHeaderPartOne.addCell(csbcHeader);
-                    document.add(csbcHeaderPartOne);
-                    //   document.add(heading);
-                    document.add(headingRun);
-
-                    PdfContentByte cb = writer.getDirectContent();
-                    String text = "";
-
-                    while (!DISTINCTDISTRICTT.isEmpty()) {
-                        String filepath = DISTINCTDISTRICTT.poll();
-                        File image = new File(filepath);
-                        FileInputStream fis = new FileInputStream(image);
-                        int indentation = 0;
-                        com.itextpdf.text.Image dp = com.itextpdf.text.Image.getInstance(ImageIO.read(fis), null);
-                        float scaler = ((document.getPageSize().getWidth() - document.leftMargin()
-                                - document.rightMargin() - indentation) / dp.getWidth()) * 100;
-
-                        dp.scalePercent(scaler);
-                        document.add(dp);
-                    }
-
-                    BarcodeQRCode qrcode = new BarcodeQRCode("S/W Developed By ANKITAPPS ", 1, 1, null);
-                    com.itextpdf.text.Image qrcodeImage = qrcode.getImage();
-                    qrcodeImage.setAbsolutePosition(10f, 10f);
-                    qrcodeImage.scalePercent(200);
-                    document.add(qrcodeImage);
-
-                    document.close();
-                    ConsoleMsg("PDF FULL REPORT GENERATED");
-                } catch (Exception ex) {
-                    ConsoleMsg(ex.getMessage());
-                }
-
-                return null;
-            }
-
-            private PdfPCell createValueCell(String text) {
-                // font
-                Font font = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL, BaseColor.BLACK);
-
-                // create cell
-                PdfPCell cell = new PdfPCell(new Phrase(text, font));
-
-                return cell;
-            }
-
-        }.execute();
-    }//GEN-LAST:event_jButton3ActionPerformed
 
     public void export2PDF(Object pz) {
 
@@ -425,10 +297,6 @@ public class Main extends javax.swing.JFrame {
         }.execute();
 
     }
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     public String getFile() {
         JFileChooser chooser;
         int result;
@@ -664,8 +532,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextArea console;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
